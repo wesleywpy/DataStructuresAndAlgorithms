@@ -21,4 +21,19 @@ public class SelectionSort implements Sort {
         }
     }
 
+
+    @Override
+    public <T extends Comparable<T>> void sort(T[] arr) {
+        System.out.println("排序中...");
+
+        for (int i = 0; i < arr.length; i ++) {
+            for(int j = i; j < arr.length; j++){
+                if(arr[j].compareTo(arr[i]) < 0){
+                    T swap = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = swap;
+                }
+            }
+        }
+    }
 }

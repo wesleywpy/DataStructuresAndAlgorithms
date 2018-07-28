@@ -6,4 +6,7 @@ package com.wesley.growth.algorithms.sort;
 public interface Sort {
 
     void sort(int[] arr);
+
+    <T extends Comparable<T>> void sort(T[] arr);
+
 }

@@ -16,9 +16,9 @@ public class SortTestHelper {
     /**
      * 生成有n个元素的随机数组,每个元素的随机范围为[rangeL, rangeR]
      */
-    public static int[] generateRandomArray(int n, int rangeL, int rangeR) {
+    public static Integer[] generateRandomArray(int n, int rangeL, int rangeR) {
         assert rangeL < rangeR;
-        int[] result = new int[n];
+        Integer[] result = new Integer[n];
 
         Random random = new Random();
         for(int i = 0; i < n; i++){
@@ -40,6 +40,16 @@ public class SortTestHelper {
         System.out.println("排序结束! \r\n耗时: " + (end - start) + " 毫秒");
     }
 
+    public static <T extends Comparable<T>> void testSort(Sort sort, T[] arr){
+        System.out.println("排序开始...");
+
+        long start = System.currentTimeMillis();
+        sort.sort(arr);
+        long end = System.currentTimeMillis();
+
+        System.out.println("排序结束! \r\n耗时: " + (end - start) + " 毫秒");
+    }
+
     private static boolean isSorted(int[] arr){
         for(int i = 0; i < arr.length - 1; i++) {
             if(arr[i] > arr[i + 1]){
@@ -50,7 +60,7 @@ public class SortTestHelper {
         return true;
     }
 
-    public static void print(int[] array){
+    public static <T> void print(T[] array){
         StringJoiner joiner = new StringJoiner(",");
         for (int i = 0; i < array.length; i++){
             joiner.add(String.valueOf(array[i]));

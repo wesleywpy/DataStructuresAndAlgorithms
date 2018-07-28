@@ -11,8 +11,20 @@ public class SortTest {
 
     @Test
     public void selectSort() throws Exception {
-        int[] randomArray = SortTestHelper.generateRandomArray(10000, 0, 10000);
-        SortTestHelper.testSort(new SelectionSort(), randomArray);
+        Integer[] randomArray1 = SortTestHelper.generateRandomArray(50000, 0, 50000);
+        Integer[] randomArray2 = SortTestHelper.generateRandomArray(50000, 0, 50000);
+        SortTestHelper.testSort(new SelectionSort(), randomArray1);
+        System.out.println("------------");
+        SortTestHelper.testSort(new MergeSort(), randomArray2);
     }
+
+
+    @Test
+    public void selectSort2() throws Exception {
+        String[] arr = {"A", "C", "Z", "B", "D", "E"};
+        SortTestHelper.testSort(new SelectionSort(), arr);
+        SortTestHelper.print(arr);
+    }
+
 
 }
