@@ -5,21 +5,7 @@ package com.wesley.growth.algorithms.sort;
  * 时间复杂度 N log(N)
  * @author Wesley Created By 2018/7/28
  */
-public class MergeSort implements Sort{
-
-    @Override
-    public void sort(int[] arr) {
-        Integer[] result = new Integer[arr.length];
-        for (int i = 0; i < arr.length; i ++){
-            result[i] = arr[i];
-        }
-
-        sort(result);
-
-        for (int i = 0; i < arr.length; i ++){
-            arr[i] = result[i];
-        }
-    }
+public class MergeSort extends AbstractSort{
 
     @Override
     public <T extends Comparable<T>> void sort(T[] arr) {

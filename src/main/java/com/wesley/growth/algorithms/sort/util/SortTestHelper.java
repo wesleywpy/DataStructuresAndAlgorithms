@@ -16,7 +16,7 @@ public class SortTestHelper {
     /**
      * 生成有n个元素的随机数组,每个元素的随机范围为[rangeL, rangeR]
      */
-    public static Integer[] generateRandomArray(int n, int rangeL, int rangeR) {
+    public static Integer[] generateRandomIntegerArray(int n, int rangeL, int rangeR) {
         assert rangeL < rangeR;
         Integer[] result = new Integer[n];
 
@@ -27,7 +27,22 @@ public class SortTestHelper {
         return result;
     }
 
+    /**
+     * 生成有n个元素的随机数组,每个元素的随机范围为[rangeL, rangeR]
+     */
+    public static int[] generateRandomIntArray(int n, int rangeL, int rangeR) {
+        assert rangeL < rangeR;
+        int[] result = new int[n];
+
+        Random random = new Random();
+        for(int i = 0; i < n; i++){
+            result[i] = random.nextInt(rangeR - rangeL + 1) + rangeL;
+        }
+        return result;
+    }
+
     public static void testSort(Sort sort, int[] arr){
+        System.out.println("排序开始: "+ sort.getClass().getSimpleName());
         long start = System.currentTimeMillis();
         sort.sort(arr);
         long end = System.currentTimeMillis();
@@ -61,6 +76,14 @@ public class SortTestHelper {
     }
 
     public static <T> void print(T[] array){
+        StringJoiner joiner = new StringJoiner(",");
+        for (int i = 0; i < array.length; i++){
+            joiner.add(String.valueOf(array[i]));
+        }
+        System.out.println(joiner.toString());
+    }
+
+    public static void print(int[] array){
         StringJoiner joiner = new StringJoiner(",");
         for (int i = 0; i < array.length; i++){
             joiner.add(String.valueOf(array[i]));
