@@ -41,6 +41,29 @@ public class SortTestHelper {
         return result;
     }
 
+    /**
+     * 生成一个近乎有序的数组
+     * @param n 数组长度
+     * @param swapTimes 数组元素随机交换的次数
+     */
+    public static int[] generateNearlyOrderedArray(int n, int swapTimes){
+        int[] result = new int[n];
+        for(int i = 0; i < n; i ++){
+            result[i] = i;
+        }
+
+        Random random = new Random();
+        for(int j = 0; j < swapTimes; j ++){
+            int x = random.nextInt(n);
+            int y = random.nextInt(n);
+            int temp = result[x];
+            result[x] = result[y];
+            result[y] = temp;
+        }
+
+        return result;
+    }
+
     public static void testSort(Sort sort, int[] arr){
         System.out.println("排序开始: "+ sort.getClass().getSimpleName());
         long start = System.currentTimeMillis();

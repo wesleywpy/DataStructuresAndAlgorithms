@@ -35,4 +35,17 @@ public class SortTest {
         SortTestHelper.testSort(new SelectionSort(), array2);
     }
 
+    /**
+     * 近乎有序的数组, 排序算法性能比较
+     */
+    @Test
+    public void compareWithNearlyOrderedArray(){
+        int[] array1 = SortTestHelper.generateNearlyOrderedArray(50000, 1000);
+        int[] array2 = Arrays.copyOf(array1, array1.length);
+        SortTestHelper.testSort(new QuickSort(), array1);
+        SortTestHelper.testSort(new MergeSort(), array2);
+    }
+
+
+
 }
