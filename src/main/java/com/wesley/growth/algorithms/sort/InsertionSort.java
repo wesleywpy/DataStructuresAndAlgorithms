@@ -1,7 +1,7 @@
 package com.wesley.growth.algorithms.sort;
 
 /**
- * 选择排序, 特点是提前终止内层循环
+ * 插入排序, 特点是提前终止内层循环
  * @author Wesley Created By 2018/8/13
  */
 public class InsertionSort extends AbstractSort{
