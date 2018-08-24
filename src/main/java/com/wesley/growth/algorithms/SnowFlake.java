@@ -27,12 +27,12 @@ public class SnowFlake {
     private final static long SEQUENCE_BITS = 12L;
 
     /**
-     * 数据中心的最大序列号
+     * 数据中心的最大序列号 31
      */
     private final static long MAX_DATACENTER_ID = -1L ^ (-1L << DATACENTER_BITS);
 
     /**
-     * 工作机器的最大序列号
+     * 工作机器的最大序列号 31
      */
     private final static long MAX_MACHINE_ID = -1L ^ (-1L << MACHINE_BITS);
 
@@ -64,4 +64,62 @@ public class SnowFlake {
      * 最近一次的时间戳
      */
     private long lastStmp = -1L;
+
+    public SnowFlake(long datacenterId, long machineId) {
+        if (datacenterId > MAX_DATACENTER_ID || datacenterId < 0) {
+            throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_ID or less than 0");
+        }
+        if (machineId > MAX_MACHINE_ID || machineId < 0) {
+            throw new IllegalArgumentException("machineId can't be greater than MAX_MACHINE_ID or less than 0");
+        }
+        this.datacenterId = datacenterId;
+        this.machineId = machineId;
+    }
+
+    /**
+     * 产生下一个ID
+     */
+    public synchronized long nextId() {
+        long currStmp = newStamp();
+        if (currStmp < lastStmp) {
+            throw new RuntimeException("Clock moved backwards.  Refusing to generate id");
+        }
+
+        if (currStmp == lastStmp) {
+            //相同毫秒内，序列号自增, 位与运算保证计算的结果范围始终是 0-4095
+            sequence = (sequence + 1) & MAX_SEQUENCE;
+            //同一毫秒的序列数已经达到最大
+            if (sequence == 0L) {
+                currStmp = getNextMill();
+            }
+        } else {
+            //不同毫秒内，序列号置为0
+            sequence = 0L;
+        }
+
+        lastStmp = currStmp;
+
+        // 时间戳 | 数据中心部分 | 机器标识 | 序列号
+        return (currStmp - START_STMP) << TIMESTAMP_SHIFT | datacenterId << DATACENTER_SHIFT | machineId << MATCHINE_SHIFT | sequence;
+    }
+
+    private long getNextMill() {
+        long mill = newStamp();
+        while (mill <= lastStmp) {
+            mill = newStamp();
+        }
+        return mill;
+    }
+
+    private long newStamp() {
+        return System.currentTimeMillis();
+    }
+
+    public static void main(String[] args) {
+        SnowFlake snowFlake = new SnowFlake(2, 3);
+
+        for (int i = 0; i < 100; i++) {
+            System.out.println(snowFlake.nextId());
+        }
+    }
 }
