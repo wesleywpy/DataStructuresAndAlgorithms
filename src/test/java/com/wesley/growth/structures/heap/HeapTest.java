@@ -19,6 +19,7 @@ public class HeapTest {
         for (Integer integer : SortTestHelper.generateRandomIntegerArray(16, 0, 100)) {
             heap.insert(integer);
         }
+        heap.printAsTree();
         heap.print();
     }
 }

@@ -12,17 +12,12 @@ import java.util.Arrays;
  */
 public class MaxHeap<E extends Comparable<E>> {
 
-    /**
-     * 空数据
-     */
-    private static final Object[] EMPTY_ELEMENTDATA = {};
-
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     /**
      * 从下标为1存储数据
      */
-    private Object[] elementData;
+    private E[] elementData;
 
     /**
      * 初始化容量
@@ -37,9 +32,7 @@ public class MaxHeap<E extends Comparable<E>> {
     public MaxHeap(int initialCapacity){
         if (initialCapacity > 0) {
             // elementData[0] 不存储数据
-            this.elementData = new Object[initialCapacity + 1];
-        } else if (initialCapacity == 0) {
-            this.elementData = EMPTY_ELEMENTDATA;
+            this.elementData = (E[]) new Comparable[initialCapacity + 1];
         } else {
             throw new IllegalArgumentException("Illegal Capacity: "+ initialCapacity);
         }
@@ -58,13 +51,15 @@ public class MaxHeap<E extends Comparable<E>> {
      * @param index 数组下标
      */
     private void shiftUp(int index) {
-        int parentIndex = index/2;
-        Comparable parentElement = (Comparable) elementData[parentIndex];
-        Comparable element = (Comparable) elementData[index];
         // 父节点小于子节点 交互位置
-        while(index > 1 && parentElement.compareTo(element) < 0){
-            swap(elementData, parentIndex, index);
-            index /= 2;
+        while(index > 1){
+            int parentIndex = index/2;
+            if(elementData[parentIndex].compareTo(elementData[index]) < 0){
+                swap(elementData, parentIndex, index);
+                index /= 2;
+            }else{
+                break;
+            }
         }
     }
 
@@ -84,7 +79,41 @@ public class MaxHeap<E extends Comparable<E>> {
 
     public void print(){
         for (int i = 1; i < this.size; i++) {
-            System.out.print(this.elementData[i]);
+            System.out.print(this.elementData[i] + ", ");
+        }
+    }
+
+    private void printSpace(int n) {
+        // 打印n个空格(在这里用‘\t'来代替)
+        for (int i = 0; i < n; i++) {
+            System.out.printf("%3s", "");
+        }
+    }
+
+    public void printAsTree() {
+        // 首先遍历第一行
+        int lineNum = 1;
+        // lines是堆的层数
+        int lines = (int) (Math.log(size) / Math.log(2)) + 1;
+        int spaceNum = (int) (Math.pow(2, lines) - 1);
+        // 因为在[1...size]左闭右闭区间存数据，data[0]不存数据
+        for (int i = 1; i <= size; ) {
+
+            //每层都是打印这个区间[2^(层数-1) ... (2^层数)-1]。如果堆里的数不够(2^层数)-1个，那就打印到size。所以取min((2^层数)-1,size).
+            for (int j = (int) Math.pow(2, lineNum - 1); j <= Math.min(size, (int) Math.pow(2, lineNum) - 1); j++) {
+                //打印spaceNum个空格
+                printSpace(spaceNum);
+                //打印数据
+                System.out.printf("%3s", elementData[j]);
+                //图片中绿色方框
+                System.out.printf("%3s", "");
+                //打印spaceNum个空格
+                printSpace(spaceNum);
+                i++;//每打印一个元素就 + 1
+            }
+            lineNum++;
+            spaceNum = spaceNum / 2;
+            System.out.println();
         }
     }
 
