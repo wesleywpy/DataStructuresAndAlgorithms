@@ -38,6 +38,21 @@ public class MaxHeap<E extends Comparable<E>> {
         }
     }
 
+    public MaxHeap(E[] datas){
+        // heapify 堆化
+        this.initialCapacity = datas.length;
+
+        this.elementData = (E[]) new Comparable[initialCapacity + 1];
+        for(int i = 0; i < datas.length; i++){
+            elementData[i + 1] = datas[i];
+        }
+
+        this.size = datas.length;
+        for(int i = size / 2; i >= 1; i --){
+            shiftDown(i);
+        }
+    }
+
     public boolean insert(E e){
         ensureCapacityInternal(size + 1);
         this.elementData[size + 1] = e;
@@ -46,12 +61,24 @@ public class MaxHeap<E extends Comparable<E>> {
         return true;
     }
 
+    public E extractMax(){
+        assert size > 0;
+        // 第一个元素和最后一个元素交换
+        E result = this.elementData[1];
+
+        swap(this.elementData, 1, size);
+        this.elementData[size--] = null;
+        shiftDown(1);
+
+        return result;
+    }
+
     /**
      * 上移元素
      * @param index 数组下标
      */
     private void shiftUp(int index) {
-        // 父节点小于子节点 交互位置
+        // 父节点小于子节点 交换位置
         while(index > 1){
             int parentIndex = index/2;
             if(elementData[parentIndex].compareTo(elementData[index]) < 0){
@@ -63,8 +90,31 @@ public class MaxHeap<E extends Comparable<E>> {
         }
     }
 
-    private void swap(Object[] arr, int i, int j){
-        Object temp = arr[i];
+    /**
+     * 下移元素
+     */
+    private void shiftDown(int index){
+        // 存在左子节点
+        while( 2*index <= size){
+            int left = 2 * index;
+            int right = left + 1;
+            // 存在右节点并且大于左节点
+            if( right <= size && (elementData[right].compareTo(elementData[left]) > 0 )){
+                left = right;
+            }
+
+            // 如果父节点大于等于子节点
+            if(elementData[index].compareTo(elementData[left]) >= 0){
+                break;
+            }
+
+            swap(elementData, index, left);
+            index = left;
+        }
+    }
+
+    private void swap(E[] arr, int i, int j){
+        E temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
@@ -79,8 +129,9 @@ public class MaxHeap<E extends Comparable<E>> {
 
     public void print(){
         for (int i = 1; i < this.size; i++) {
-            System.out.print(this.elementData[i] + ", ");
+            System.out.print(this.elementData[i] + " ");
         }
+        System.out.println();
     }
 
     private void printSpace(int n) {

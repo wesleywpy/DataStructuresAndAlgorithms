@@ -1,10 +1,8 @@
 package com.wesley.growth.algorithms.sort;
 
 import com.wesley.growth.algorithms.sort.util.SortTestHelper;
-import static org.junit.Assert.*;
 import org.junit.Test;
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * @author Created by Wesley on 2018/7/27.
@@ -58,31 +56,56 @@ public class SortTest {
         SortTestHelper.testSort(new MergeSort(), array2);
     }
 
+
+    @Test
+    public void heapSort(){
+        Integer[] array = SortTestHelper.generateRandomIntegerArray(500000, 0, 500000);
+        SortTestHelper.testSort(new HeapSort(), array);
+    }
+
     /**
-     * 三路快速排序
+     * 综合比较
      */
     @Test
-    public void quickSort3Ways(){
-        // 大量重复元素的序列
-//        int[] array1 = SortTestHelper.generateRandomIntArray(500000, 0, 50);
-        // 近乎有序的序列
-//        int[] array1 = SortTestHelper.generateNearlyOrderedArray(500000, 100);
+    public void comprehensiveComparison(){
+        MergeSort mergeSort = new MergeSort();
+        QuickSort quickSort = new QuickSort();
+        QuickSort3Ways quickSort3Ways = new QuickSort3Ways();
+        HeapSort heapSort = new HeapSort();
+
+        System.out.println(" --------------- 一般性随机序列");
         int[] array1 = SortTestHelper.generateRandomIntArray(500000, 0, 500000);
         int[] array2 = Arrays.copyOf(array1, array1.length);
         int[] array3 = Arrays.copyOf(array1, array1.length);
+        int[] array4 = Arrays.copyOf(array1, array1.length);
 
-        SortTestHelper.testSort(new MergeSort(), array1);
-        SortTestHelper.testSort(new QuickSort(), array2);
-        SortTestHelper.testSort(new QuickSort3Ways(), array3);
+        SortTestHelper.testSort(mergeSort, array1);
+        SortTestHelper.testSort(quickSort, array2);
+        SortTestHelper.testSort(quickSort3Ways, array3);
+        SortTestHelper.testSort(heapSort, array4);
+
+        System.out.println(" --------------- 大量重复元素的序列");
+
+        array1 = SortTestHelper.generateRandomIntArray(500000, 0, 50);
+        array2 = Arrays.copyOf(array1, array1.length);
+        array3 = Arrays.copyOf(array1, array1.length);
+        array4 = Arrays.copyOf(array1, array1.length);
+
+        SortTestHelper.testSort(mergeSort, array1);
+        SortTestHelper.testSort(quickSort, array2);
+        SortTestHelper.testSort(quickSort3Ways, array3);
+        SortTestHelper.testSort(heapSort, array4);
+
+        System.out.println(" --------------- 近乎有序的序列");
+
+        array1 = SortTestHelper.generateNearlyOrderedArray(500000, 100);
+        array2 = Arrays.copyOf(array1, array1.length);
+        array3 = Arrays.copyOf(array1, array1.length);
+        array4 = Arrays.copyOf(array1, array1.length);
+
+        SortTestHelper.testSort(mergeSort, array1);
+        SortTestHelper.testSort(quickSort, array2);
+        SortTestHelper.testSort(quickSort3Ways, array3);
+        SortTestHelper.testSort(heapSort, array4);
     }
-
-
-    @Test
-    public void test(){
-        Random random = new Random();
-        for(int i = 0; i < 100; i++){
-            System.out.println(random.nextInt(1));
-        }
-    }
-
 }
