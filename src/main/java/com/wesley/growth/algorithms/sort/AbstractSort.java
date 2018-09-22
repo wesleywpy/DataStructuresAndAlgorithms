@@ -23,4 +23,10 @@ public abstract class AbstractSort implements Sort{
     public <T extends Comparable<T>> void sort(T[] arr) {
         throw new UnsupportedOperationException();
     }
+
+    protected void swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
 }

@@ -59,7 +59,7 @@ public class SortTest {
 
     @Test
     public void heapSort(){
-        Integer[] array = SortTestHelper.generateRandomIntegerArray(500000, 0, 500000);
+        int[] array = SortTestHelper.generateRandomIntArray(500000, 0, 500000);
         SortTestHelper.testSort(new HeapSort(), array);
     }
 

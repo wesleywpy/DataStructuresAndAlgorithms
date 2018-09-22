@@ -75,7 +75,7 @@ public class SortTestHelper {
             return;
         }
 
-        System.out.println("排序结束! \r\n耗时: " + (end - start) + " 毫秒");
+        System.out.println("排序结束!\t耗时: " + (end - start) + " 毫秒");
     }
 
     public static <T extends Comparable<T>> void testSort(Sort sort, T[] arr){
