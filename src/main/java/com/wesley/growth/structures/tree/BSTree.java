@@ -40,6 +40,7 @@ public class BSTree<K extends Comparable<K>,V> {
 
     public void insert(K key, V value){
         if(Objects.isNull(root)) {
+            count ++;
             root = new Node<>(key, value);
         } else {
             insert(root, key, value);
@@ -54,6 +55,26 @@ public class BSTree<K extends Comparable<K>,V> {
         return search(root, key);
     }
 
+    public void traverse(){
+        preOrder(root);
+    }
+
+    public K minimum(){
+        assert count != 0;
+        Node<K,V> minNode = minimum(root);
+        return minNode.key;
+    }
+
+    public K maximum(){
+        assert count != 0;
+        Node<K,V> maxNode = maximum(root);
+        return maxNode.key;
+    }
+
+    public void remove(K key){
+        root = remove(root, key);
+    }
+
     /**
      * 向以node为根的二叉搜索树中,插入节点(key, value)
      * @param node 递归节点
@@ -66,7 +87,7 @@ public class BSTree<K extends Comparable<K>,V> {
             return new Node<>(key, value);
         }
 
-        int result = node.key.compareTo(key);
+        int result = key.compareTo(node.key);
         if(result == 0) {
             node.key = key;
             node.value = value;
@@ -97,7 +118,7 @@ public class BSTree<K extends Comparable<K>,V> {
         while(Objects.nonNull(currentNode)){
             parentNode = currentNode;
 
-            int result = currentNode.key.compareTo(key);
+            int result = key.compareTo(currentNode.key);
             if(0 == result){
                 return;
             }else if (result < 0) {
@@ -150,6 +171,118 @@ public class BSTree<K extends Comparable<K>,V> {
             return search(node.right, key);
         }
     }
+
+    /**
+     * 对以node为根的二叉搜索树进行前序遍历
+     */
+    private void preOrder(Node<K,V> node){
+        if(Objects.nonNull(node)){
+            System.out.println(node.key);
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    /**
+     * 对以node为根的二叉搜索树进行中序遍历
+     */
+    private void inOrder(Node<K,V> node){
+        if(Objects.nonNull(node)){
+            inOrder(node.left);
+            System.out.println(node.key);
+            inOrder(node.right);
+        }
+    }
+
+    /**
+     * 对以node为根的二叉搜索树进行后序遍历
+     */
+    private void postOrder(Node<K,V> node){
+        if(Objects.nonNull(node)){
+            postOrder(node.left);
+            postOrder(node.right);
+            System.out.println(node.key);
+        }
+    }
+
+    /**
+     * 在以node为根的二叉搜索树中,返回最小键值的节点
+     */
+    private Node<K,V> minimum(Node<K,V> node){
+        if(Objects.isNull(node.left)){
+            return node;
+        }
+
+        return minimum(node.left);
+    }
+
+    /**
+     * 在以node为根的二叉搜索树中,返回最大键值的节点
+     */
+    private Node<K,V> maximum(Node<K,V> node){
+        if(Objects.isNull(node.right)){
+            return node;
+        }
+
+        return minimum(node.right);
+    }
+
+    /**
+     * 删除掉以node为根的二分搜索树中键值为key的节点
+     * 返回删除节点后新的二分搜索树的根
+     */
+    private Node<K,V> remove(Node<K,V> node, K key){
+        if(Objects.isNull(node)) {
+            return null;
+        }
+
+
+
+
+        return node;
+    }
+
+    /**
+     * 删除掉以node为根的二分搜索树中的最小节点
+     * 返回删除节点后新的二分搜索树的根
+     */
+    private Node<K, V> removeMin(Node<K,V> node){
+        if(Objects.isNull(node.left)){
+            Node<K, V> result = node.right;
+            node = null;
+            count --;
+            return result;
+        }
+
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+    /**
+     * 删除掉以node为根的二分搜索树中的最大节点
+     * 返回删除节点后新的二分搜索树的根
+     */
+    private Node<K, V> removeMax(Node<K,V> node){
+
+        Node<K, V> parentNode = node;
+        Node<K, V> currentNode = node;
+
+        while(Objects.nonNull(currentNode)){
+
+            if(Objects.isNull(currentNode.right)){
+                // 当前节点是最大节点
+                parentNode.right = currentNode.left;
+                count --;
+                break;
+            }
+
+            parentNode = currentNode;
+            currentNode = currentNode.right;
+        }
+
+        return node;
+    }
+
 
     static class Node<K,V>{
         K key;

@@ -37,4 +37,23 @@ public class BSTreeTest {
         Integer count = sbTree.search("God");
         System.out.println(count);
     }
+
+    @Test
+    public void traverse() throws Exception{
+        BSTree<Integer,Integer> sbTree = new BSTree<>();
+        sbTree.insert(28,28);
+        sbTree.insert(16,16);
+        sbTree.insert(30,30);
+        sbTree.insert(13,13);
+        sbTree.insert(22,22);
+        sbTree.insert(29,29);
+        sbTree.insert(42,42);
+
+        sbTree.traverse();
+        System.out.println("remove maxNode ...");;
+        sbTree.remove();
+        sbTree.traverse();
+    }
+
+
 }
