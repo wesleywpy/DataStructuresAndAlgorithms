@@ -236,10 +236,48 @@ public class BSTree<K extends Comparable<K>,V> {
             return null;
         }
 
+        int result = key.compareTo(node.key);
 
+        if(result < 0){
+           // 目标key在当前节点 左边
+            node.left = remove(node.left, key);
+            return node;
+        }else if (result > 0){
+            // 目标key在当前节点 右边
+            node.right = remove(node.right, key);
+            return node;
+        }else{
+            // 找到目标key, 进行删除
 
+            if (Objects.isNull(node.left)){
+                // 目标左子节点为null, 删除当前节点, 返回右子节点
+                Node<K,V> rightNode = node.right;
+                node = null;
+                count --;
+                return rightNode;
+            }
 
-        return node;
+            if (Objects.isNull(node.right)){
+                // 目标右子节点为null, 删除当前节点, 返回左子节点
+                Node<K,V> leftNode = node.left;
+                node = null;
+                count --;
+                return leftNode;
+            }
+
+            // 左右子节点都不为null, 找右子树中最小节点, 并复制该节点
+            Node<K,V> minNodeCopy = minimum(node.right).copy();
+            count ++;
+
+            // 删除右子树中最小节点
+            minNodeCopy.left = node.left;
+            minNodeCopy.right = removeMin(node.right);
+
+            node = null;
+            count --;
+            return minNodeCopy;
+
+        }
     }
 
     /**
@@ -296,6 +334,11 @@ public class BSTree<K extends Comparable<K>,V> {
             this.left = null;
             this.right = null;
         }
+
+        Node<K,V> copy(){
+            return new Node<>(key, value);
+        }
+
     }
 
 
