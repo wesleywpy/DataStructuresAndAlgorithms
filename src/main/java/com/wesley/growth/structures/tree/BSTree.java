@@ -76,6 +76,30 @@ public class BSTree<K extends Comparable<K>,V> {
     }
 
     /**
+     * 最接近key,但小于key的值，如果比最小值还小，floor则不存在
+     */
+    public V floor(K key){
+        if (Objects.isNull(root)) {
+            return null;
+        }
+
+        Node<K,V> node = floor(root, key);
+        return Objects.nonNull(node) ? node.value : null;
+    }
+
+    /**
+     * 最接近key，但大于key的值，如果比最大值还打，ceil则不存在
+     */
+    public V ceil(K key){
+        if (Objects.isNull(root)) {
+            return null;
+        }
+
+        Node<K,V> node = ceil(root, key);
+        return Objects.nonNull(node) ? node.value : null;
+    }
+
+    /**
      * 向以node为根的二叉搜索树中,插入节点(key, value)
      * @param node 递归节点
      * @return 返回插入新节点后的二叉搜索树的根
@@ -316,6 +340,56 @@ public class BSTree<K extends Comparable<K>,V> {
 
             parentNode = currentNode;
             currentNode = currentNode.right;
+        }
+
+        return node;
+    }
+
+    /**
+     * 最接近key,但小于key的值，如果比最小值还小，floor则不存在。
+     */
+    private Node<K, V> floor(Node<K, V> node, K key){
+        int result = key.compareTo(node.key);
+        if(0 == result){
+            return node;
+        }
+
+        if( result > 0 && Objects.nonNull(node.right)){
+            // key 比 node的key大, floor在右子树中
+            return floor(node.right, key);
+        }
+
+        if (result < 0){
+            if( Objects.nonNull(node.left) ){
+                // key 比 node的Key小, floor(x)在左子树中
+                return floor(node.left, key);
+            }else {
+                return null;
+            }
+        }
+
+        return node;
+    }
+
+    private Node<K, V> ceil(Node<K, V> node, K key){
+        int result = key.compareTo(node.key);
+        if(0 == result){
+            return node;
+        }
+
+        // key 比 node的Key小, ceil(x)在左子树
+        if (result < 0 && Objects.nonNull(node.left) && node.left.key.compareTo(key) > 0){
+            return ceil(node.left, key);
+        }
+
+        // key 比 node的key大, ceil在右子树中
+        if( result > 0){
+            if( Objects.nonNull(node.right) ){
+                // key 比 node的Key小, floor(x)在左子树中
+                return ceil(node.right, key);
+            }else {
+                return null;
+            }
         }
 
         return node;

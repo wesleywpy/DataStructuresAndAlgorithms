@@ -2,6 +2,7 @@ package com.wesley.growth.algorithms.sort;
 
 import com.wesley.growth.algorithms.sort.util.SortTestHelper;
 import org.junit.Test;
+
 import java.util.Arrays;
 
 /**
@@ -59,8 +60,10 @@ public class SortTest {
 
     @Test
     public void heapSort(){
-        int[] array = SortTestHelper.generateRandomIntArray(500000, 0, 500000);
-        SortTestHelper.testSort(new HeapSort(), array);
+//        int[] array = SortTestHelper.generateRandomIntArray(500000, 0, 500000);
+        int[] array = {3, 9, 6, 5, 2, 8, 7};
+        SortTestHelper.testSort(new QuickSort(), array);
+        SortTestHelper.print(array);
     }
 
     /**
@@ -108,4 +111,6 @@ public class SortTest {
         SortTestHelper.testSort(quickSort3Ways, array3);
         SortTestHelper.testSort(heapSort, array4);
     }
+
+
 }

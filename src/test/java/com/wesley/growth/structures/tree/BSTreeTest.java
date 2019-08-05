@@ -51,8 +51,22 @@ public class BSTreeTest {
 
         sbTree.traverse();
         System.out.println("remove maxNode ...");;
-        sbTree.remove();
         sbTree.traverse();
+    }
+
+    @Test
+    public void testFloorAndCeil() throws Exception {
+        BSTree<Integer,Integer> bsTree = new BSTree<>();
+        bsTree.insert(41, 41);
+        bsTree.insert(22, 22);
+        bsTree.insert(58, 58);
+        bsTree.insert(15, 15);
+        bsTree.insert(50, 50);
+        bsTree.insert(63, 63);
+        bsTree.insert(42, 42);
+
+        System.out.println(bsTree.floor(45));
+        System.out.println(bsTree.ceil(45));
     }
 
 

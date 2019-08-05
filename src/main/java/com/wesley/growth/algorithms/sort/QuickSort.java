@@ -58,6 +58,7 @@ public class QuickSort extends AbstractSort {
     private int parition2(int[] arr, int left, int right) {
         // 随机选取区间中的一个数为基准数。
         int randomIndex = random.nextInt(right - left + 1) + left;
+
         swap(arr, left, randomIndex);
 
         int pivot = arr[left];
