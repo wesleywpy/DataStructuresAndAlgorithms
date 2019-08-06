@@ -23,7 +23,7 @@ public class ExamTest {
 
     @Test
     public void removeDuplicateCharTest() {
-        String str = "abacdae";
+        String str = "abbbcdae";
 
         String r1 = StringExam.removeDuplicateChar(str);
         System.out.println(r1);

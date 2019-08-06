@@ -29,7 +29,7 @@ public class LinkedList<E> {
 
         Node prev = dummyHead;
         for (int i = 0; i < index; i++) {
-            prev = dummyHead.next;
+            prev = prev.next;
         }
 
         // 中间插入元素, 注意preve.next赋值顺序
@@ -51,6 +51,63 @@ public class LinkedList<E> {
         add(size, e);
     }
 
+    /**
+     * 获取链表的index(0-based)位置的元素
+     * 练习或面试用
+     */
+    public E get(int index) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("查询失败, 非法Index");
+        }
+
+        Node cur = dummyHead.next;
+        for (int i = 0; i < size; i++) {
+            cur = cur.next;
+        }
+
+        return cur.e;
+    }
+
+    /**
+     * 获取第一个元素
+     */
+    public E getFirst() {
+        return get(0);
+    }
+
+    public E getLast() {
+        return get(size - 1);
+    }
+
+    /**
+     * 修改链表的index(0-based)位置的元素
+     * 练习或面试用
+     */
+    public void set(int index, E e) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("查询失败, 非法Index");
+        }
+
+        Node cur = dummyHead.next;
+        for (int i = 0; i < size; i++) {
+            cur = cur.next;
+        }
+
+        cur.e = e;
+    }
+
+    public boolean contains(E ele) {
+        Node cur = dummyHead.next;
+        while (cur.next != null) {
+            if (cur.e.equals(ele)) {
+                return true;
+            }
+            cur = cur.next;
+        }
+
+        return false;
+    }
+
 
     public boolean isEmpty() {
         return size == 0;
@@ -60,6 +117,18 @@ public class LinkedList<E> {
         return size;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder();
+        Node cur = dummyHead.next;
+        while (cur != null) {
+            res.append(cur).append("->");
+            cur = cur.next;
+        }
+
+        res.append("NULL");
+        return res.toString();
+    }
 
     private class Node{
         E e;
@@ -68,6 +137,11 @@ public class LinkedList<E> {
         public Node(E e, Node next) {
             this.e = e;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return e.toString();
         }
 
     }
