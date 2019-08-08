@@ -6,7 +6,7 @@ import com.wesley.growth.structures.linked.LinkedList;
  * 链表实现栈
  * @author Created by Wesley on 2019/8/7
  */
-public class LinkedListStack<E> implements  Stack<E>{
+public class LinkedListStack<E> implements Stack<E>{
 
     private LinkedList<E> linkedList;
 
@@ -31,7 +31,7 @@ public class LinkedListStack<E> implements  Stack<E>{
 
     @Override
     public E pop() {
-        return null;
+        return linkedList.removeFirst();
     }
 
     @Override

@@ -108,6 +108,46 @@ public class LinkedList<E> {
         return false;
     }
 
+    /**
+     * 删除链表的index(0-based)位置的元素
+     */
+    public E remove(int index) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("非法Index");
+        }
+
+        // 从虚拟头结点开始
+        Node prev = dummyHead;
+        for (int i = 0; i < index; i++) {
+            prev = prev.next;
+        }
+
+        Node delNode = prev.next;
+        prev.next = delNode.next;
+        delNode.next = null;
+        this.size --;
+        return delNode.e;
+    }
+
+    public E removeFirst() {
+        return remove(0);
+    }
+
+    public E removeLast() {
+        return remove(size - 1);
+    }
+
+    /**
+     * 删除倒数第n(1-based)个元素
+     */
+    public E removeLastIndex(int lastIndex) {
+        if (lastIndex < 1 || lastIndex > size) {
+            throw new IllegalArgumentException("非法Index");
+        }
+
+        return remove(size - lastIndex);
+    }
+
 
     public boolean isEmpty() {
         return size == 0;
