@@ -37,16 +37,49 @@ public class Solution203 {
      */
     public ListNode removeElementsByRecursion(ListNode head, int val) {
         if (head == null) {
-            return head;
+            return null;
         }
 
-        ListNode node = removeElementsByRecursion(head.next, val);
-        if (head.val == val) {
-            return node;
-        } else {
-            head.next = node;
-            return head;
+        head.next = removeElementsByRecursion(head.next, val);
+        // 返回head.next就相当于删除当前元素
+        return head.val == val ? head.next : head;
+    }
+
+    /**
+     * 递归实现, 打印执行过程
+     */
+    public ListNode removeElementsByRecursion(ListNode head, int val, int depth) {
+        System.out.print(generateDepthString(depth));
+        System.out.println("Call: remove "+ val + " in " + head);
+        if (head == null) {
+            System.out.print(generateDepthString(depth));
+            System.out.println("Return NULL");
+            return null;
         }
+
+        ListNode resNode = removeElementsByRecursion(head.next, val, depth + 1);
+        ListNode result;
+        if (head.val == val) {
+            result = resNode;
+        } else {
+            head.next = resNode;
+            result = head;
+        }
+
+        System.out.print(generateDepthString(depth));
+        System.out.println("AfterRemove: "+ resNode);
+        System.out.print(generateDepthString(depth));
+        System.out.println("Return: "+ head);
+        return result;
+    }
+
+    private String generateDepthString(int depth) {
+        StringBuilder sbl = new StringBuilder();
+        for (int i = 0; i < depth; i++) {
+            sbl.append("-- ");
+        }
+
+        return sbl.toString();
     }
 
     public static void main(String[] args) {
@@ -55,7 +88,7 @@ public class Solution203 {
         ListNode listNode = new ListNode(arr);
 
         System.out.println(listNode);
-        ListNode result = new Solution203().removeElementsByRecursion(listNode, 6);
+        ListNode result = new Solution203().removeElementsByRecursion(listNode, 6, 0);
         System.out.println(result);
     }
 
