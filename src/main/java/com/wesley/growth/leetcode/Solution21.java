@@ -14,6 +14,61 @@ package com.wesley.growth.leetcode;
 public class Solution21 {
 
     /**
+     * 递归实现
+     */
+    public ListNode mergeTwoListsByByRecursion(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+
+        if (l2 == null) {
+            return l1;
+        }
+
+        if (l1.val > l2.val) {
+            l2.next = mergeTwoListsByByRecursion(l1, l2.next);
+            return l2;
+        } else {
+            l1.next = mergeTwoListsByByRecursion(l1.next, l2);
+            return l1;
+        }
+    }
+
+    /**
+     * 递归实现, 打印执行过程
+     */
+    public ListNode mergeTwoListsByByRecursion(ListNode l1, ListNode l2, int depth) {
+
+        if (l1 == null) {
+            System.out.print(generateDepthString(depth));
+            System.out.println("return L2 :"+ l2.toString());
+            return l2;
+        }
+
+        if (l2 == null) {
+            System.out.print(generateDepthString(depth));
+            System.out.println("return L1 :"+ l1.toString());
+            return l1;
+        }
+
+        String depthString = generateDepthString(depth);
+        if (l1.val > l2.val) {
+            System.out.println(depthString + "L1 : "+ l1.toString());
+            System.out.println(depthString + "L2 : "+ l2.toString());
+            l2.next = mergeTwoListsByByRecursion(l1, l2.next, depth+1);
+            System.out.println(depthString + "return L2 : "+ l2.toString());
+            return l2;
+        } else {
+            System.out.println(depthString + "L1 : "+ l1.toString());
+            System.out.println(depthString + "L2 : "+ l2.toString());
+            l1.next = mergeTwoListsByByRecursion(l1.next, l2, depth+1);
+            System.out.println(depthString + "return L1 : "+ l1.toString());
+            return l1;
+        }
+    }
+
+
+    /**
      * 迭代实现
      * @param l1
      * @param l2
@@ -46,13 +101,22 @@ public class Solution21 {
         return dummyNode.next;
     }
 
+    private String generateDepthString(int depth) {
+        StringBuilder sbl = new StringBuilder();
+        for (int i = 0; i < depth; i++) {
+            sbl.append("-- ");
+        }
+
+        return sbl.toString();
+    }
+
     public static void main(String[] args) {
         int[] arr1 = {1, 2, 4};
         int[] arr2 = {1, 3, 4};
         ListNode node1 = new ListNode(arr1);
         ListNode node2 = new ListNode(arr2);
 
-        ListNode result = new Solution21().mergeTwoLists(node1, node2);
+        ListNode result = new Solution21().mergeTwoListsByByRecursion(node1, node2, 1);
         System.out.println(result);
     }
 
