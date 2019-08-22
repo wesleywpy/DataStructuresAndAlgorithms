@@ -1,4 +1,4 @@
-package com.wesley.growth.leetcode;
+package com.wesley.growth.leetcode.linked;
 
 /**
  * <p>
@@ -111,8 +111,8 @@ public class Solution21 {
     }
 
     public static void main(String[] args) {
-        int[] arr1 = {1, 2, 4};
-        int[] arr2 = {1, 3, 4};
+        int[] arr1 = {1, 2, 5};
+        int[] arr2 = {0, 3, 4};
         ListNode node1 = new ListNode(arr1);
         ListNode node2 = new ListNode(arr2);
 

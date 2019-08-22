@@ -1,4 +1,4 @@
-package com.wesley.growth.leetcode;
+package com.wesley.growth.leetcode.linked;
 
 /**
  * 删除链表中等于给定值 val 的所有节点。
