@@ -31,10 +31,6 @@ public class Solution938 {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {10, 5, 15, 3, 7, null, 18};
-        TreeNode treeNode = new TreeNode(arr);
-        int result = new Solution938().rangeSumBST(treeNode, 7, 15);
-        System.out.println(result);
     }
 
 }
