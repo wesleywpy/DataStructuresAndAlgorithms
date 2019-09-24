@@ -159,6 +159,29 @@ public class AVLTree <K extends Comparable<K>, V> {
             System.out.println("不平衡 : " + balanceFactor);
         }
 
+        // 平衡维护
+        // LL
+        if (balanceFactor > 1 && getBalanceFactor(node.left) >= 0) {
+            return rightRotate(node);
+        }
+
+        // RR
+        if (balanceFactor < -1 && getBalanceFactor(node.right) <= 0) {
+            return leftRotate(node);
+        }
+
+        // LR
+        if (balanceFactor > 1 && getBalanceFactor(node.left) < 0) {
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+
+        // RL
+        if (balanceFactor > -1 && getBalanceFactor(node.left) > 0) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
+        }
+
         return node;
     }
 
@@ -183,6 +206,51 @@ public class AVLTree <K extends Comparable<K>, V> {
         return getHeight(node.left) - getHeight(node.right);
     }
 
+    // 对节点y进行向右旋转操作，返回旋转后新的根节点x
+    //        y                              x
+    //       / \                           /   \
+    //      x   T4     向右旋转 (y)        z     y
+    //     / \       - - - - - - - ->    / \   / \
+    //    z   T3                       T1  T2 T3 T4
+    //   / \
+    // T1   T2
+    private Node<K, V> rightRotate(Node<K, V> y) {
+        Node<K,V> x = y.left;
+        Node<K,V> t3 = x.right;
+
+        // 向右旋转过程
+        x.right = y;
+        y.left = t3;
+
+        // 更新高度
+        y.height = 1 + Math.max(getHeight(y.left), getHeight(y.right));
+        x.height = 1 + Math.max(getHeight(x.left), getHeight(x.right));
+
+        return x;
+    }
+
+    // 对节点y进行向左旋转操作，返回旋转后新的根节点x
+    //    y                             x
+    //  /  \                          /   \
+    // T1   x      向左旋转 (y)       y     z
+    //     / \   - - - - - - - ->   / \   / \
+    //   T2  z                     T1 T2 T3 T4
+    //      / \
+    //     T3 T4
+    private Node<K, V> leftRotate(Node<K, V> y) {
+        Node<K, V> x = y.right;
+        Node<K, V> t2 = x.left;
+
+        // 向左旋转
+        x.left = y;
+        y.right = t2;
+
+        // 更新高度
+        y.height = 1 + Math.max(getHeight(y.left), getHeight(y.right));
+        x.height = 1 + Math.max(getHeight(x.left), getHeight(x.right));
+
+        return x;
+    }
 
     private class Node<K, V> {
         K key;
