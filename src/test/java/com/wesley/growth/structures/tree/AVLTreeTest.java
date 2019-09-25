@@ -36,6 +36,8 @@ public class AVLTreeTest {
             System.out.println("Frequency of PREJUDICE: " + map.get("prejudice"));
             System.out.println("is BST: " + map.isBST());
             System.out.println("is Balanced: " + map.isBalanced());
+
+            words.forEach(map::remove);
         }
 
         System.out.println();

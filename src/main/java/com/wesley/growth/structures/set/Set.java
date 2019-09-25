@@ -16,8 +16,8 @@ public interface Set<E> {
 
     boolean contains(E e);
 
-    boolean add(E e);
+    void add(E e);
 
-    boolean remove(E e);
+    void remove(E e);
 
 }

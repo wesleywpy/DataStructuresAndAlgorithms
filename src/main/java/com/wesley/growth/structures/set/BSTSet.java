@@ -26,12 +26,12 @@ public class BSTSet<E extends Comparable<E>> implements Set<E> {
     }
 
     @Override
-    public boolean add(E e) {
-        return false;
+    public void add(E e) {
+
     }
 
     @Override
-    public boolean remove(E e) {
-        return false;
+    public void remove(E e) {
+
     }
 }
