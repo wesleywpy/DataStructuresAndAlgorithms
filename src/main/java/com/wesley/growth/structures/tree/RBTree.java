@@ -27,27 +27,25 @@ public class RBTree<K extends Comparable<K>,V> {
      */
     private Node root = null;
 
-    private int count;
+    private int size;
 
     public RBTree() {
-        this.count = 0;
+        this.size = 0;
     }
 
     public int size() {
-        return count;
+        return size;
     }
 
     public boolean isEmpty() {
-        return count == 0;
+        return size == 0;
     }
 
-    public void insert(K key, V value){
-        if(Objects.isNull(root)) {
-            count ++;
-            root = new Node(key, value);
-        } else {
-            insert(root, key, value);
-        }
+    /**
+     * 添加新元素
+     */
+    public void add(K key, V value){
+        root = add(root, key, value);
     }
 
     public boolean contains(K key){
@@ -63,13 +61,13 @@ public class RBTree<K extends Comparable<K>,V> {
     }
 
     public K minimum(){
-        assert count != 0;
+        assert size != 0;
         Node minNode = minimum(root);
         return minNode.key;
     }
 
     public K maximum(){
-        assert count != 0;
+        assert size != 0;
         Node maxNode = maximum(root);
         return maxNode.key;
     }
@@ -107,27 +105,69 @@ public class RBTree<K extends Comparable<K>,V> {
      * @param node 递归节点
      * @return 返回插入新节点后的二叉搜索树的根
      */
-    private Node insert(Node node, K key, V value){
-
-        if (Objects.isNull(node)){
-            count ++;
+    private Node add(Node node, K key, V value){
+        if (Objects.isNull(node)) {
+            size ++;
             return new Node(key, value);
         }
 
-        int result = key.compareTo(node.key);
-        if(result == 0) {
-            node.key = key;
+        int cr = key.compareTo(node.key);
+        // 插入节点key 大于 当前节点key
+        if (cr > 0) {
+            node.right = add(node.right, key, value);
+        }
+        // 插入节点key 小于 当前节点key
+        else if (cr < 0) {
+            node.left = add(node.left, key, value);
+        }
+        // 插入节点key 等于 当前节点key
+        else {
             node.value = value;
-        } else if (result < 0) {
-            // 左子树递归
-            node.left = insert(node.left, key, value);
-        } else {
-            // 右子树递归
-            node.right = insert(node.right, key, value);
         }
 
         return node;
 
+    }
+
+    //   node                     x
+    //  /   \     左旋转         /  \
+    // T1   x   --------->   node   T3
+    //     / \              /   \
+    //    T2 T3            T1   T2
+    private Node leftRotate(Node node) {
+        Node x = node.right;
+        // 左旋
+        node.right = x.left;
+        x.left = node;
+
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    //     node                   x
+    //    /   \     右旋转       /  \
+    //   x    T2   ------->   y   node
+    //  / \                       /  \
+    // y  T1                     T1  T2
+    private Node rightRotate(Node node) {
+        Node x = node.left;
+        // 右旋
+        node.left = x.right;
+        x.right = node;
+
+        x.color = node.color;
+        node.color = RED;
+        return x;
+    }
+
+    /**
+     * 颜色翻转
+     */
+    private void flipColors(Node node) {
+        node.color = RED;
+        node.left.color = BLACK;
+        node.right.color = BLACK;
     }
 
     /**
@@ -280,7 +320,7 @@ public class RBTree<K extends Comparable<K>,V> {
                 // 目标左子节点为null, 删除当前节点, 返回右子节点
                 Node rightNode = node.right;
                 node = null;
-                count --;
+                size--;
                 return rightNode;
             }
 
@@ -288,20 +328,20 @@ public class RBTree<K extends Comparable<K>,V> {
                 // 目标右子节点为null, 删除当前节点, 返回左子节点
                 Node leftNode = node.left;
                 node = null;
-                count --;
+                size--;
                 return leftNode;
             }
 
             // 左右子节点都不为null, 找右子树中最小节点, 并复制该节点
             Node minNodeCopy = minimum(node.right).copy();
-            count ++;
+            size++;
 
             // 删除右子树中最小节点
             minNodeCopy.left = node.left;
             minNodeCopy.right = removeMin(node.right);
 
             node = null;
-            count --;
+            size--;
             return minNodeCopy;
 
         }
@@ -315,7 +355,7 @@ public class RBTree<K extends Comparable<K>,V> {
         if(Objects.isNull(node.left)){
             Node result = node.right;
             node = null;
-            count --;
+            size--;
             return result;
         }
 
@@ -337,7 +377,7 @@ public class RBTree<K extends Comparable<K>,V> {
             if(Objects.isNull(currentNode.right)){
                 // 当前节点是最大节点
                 parentNode.right = currentNode.left;
-                count --;
+                size--;
                 break;
             }
 
