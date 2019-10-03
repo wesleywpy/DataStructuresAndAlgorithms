@@ -15,6 +15,8 @@ import java.util.Objects;
  * </ul>
  * </p>
  *
+ *  本代码实现的是 一种特殊的红黑树――左倾红黑树
+ *  代码为了维护“左倾”这个性质，做了额外的事情，消耗了性能，没有“任何不平衡都可以在三次旋转内解决”这么好的性能优势。
  * @author Created by Yani on 2019/09/26
  */
 public class RBTree<K extends Comparable<K>,V> {
@@ -46,6 +48,22 @@ public class RBTree<K extends Comparable<K>,V> {
      */
     public void add(K key, V value){
         root = add(root, key, value);
+        // 根节点始终为黑色
+        root.color = BLACK;
+    }
+
+    public V get(K key){
+        Node node = getNode(root, key);
+        return node == null ? null : (V) node.value;
+    }
+
+    public void set(K key, V newValue){
+        Node node = getNode(root, key);
+        if (node == null) {
+            throw new IllegalArgumentException(key + " doesn't exist!");
+        }
+
+        node.value = newValue;
     }
 
     public boolean contains(K key){
@@ -101,6 +119,27 @@ public class RBTree<K extends Comparable<K>,V> {
     }
 
     /**
+     * @return 返回以node为根节点的树中，key所在的节点
+     */
+    private Node getNode(Node node, K key) {
+        if (node == null) {
+            return null;
+        }
+
+        int cr = key.compareTo(node.key);
+        // key 大于 当前节点
+        if (cr > 0) {
+            return getNode(node.right, key);
+        }
+        // key 小于 当前节点
+        else if (cr < 0) {
+            return getNode(node.left, key);
+        } else {
+            return node;
+        }
+    }
+
+    /**
      * 向以node为根的二叉搜索树中,插入节点(key, value)
      * @param node 递归节点
      * @return 返回插入新节点后的二叉搜索树的根
@@ -123,6 +162,21 @@ public class RBTree<K extends Comparable<K>,V> {
         // 插入节点key 等于 当前节点key
         else {
             node.value = value;
+        }
+
+        // 右节点红色, 左节点黑色, 进行左旋
+        if (isRed(node.right) && !isRed(node.left)) {
+            node = leftRotate(node);
+        }
+
+        // 左节点红色, 右节点黑色, 进行右旋
+        if (isRed(node.left) && !isRed(node.right)) {
+            node = rightRotate(node);
+        }
+
+        // 左右节点红色, 进行颜色反转
+        if (isRed(node.left) && isRed(node.right)) {
+            flipColors(node);
         }
 
         return node;
@@ -168,6 +222,13 @@ public class RBTree<K extends Comparable<K>,V> {
         node.color = RED;
         node.left.color = BLACK;
         node.right.color = BLACK;
+    }
+
+    private boolean isRed(Node node) {
+        if (node == null) {
+            return BLACK;
+        }
+        return node.color;
     }
 
     /**
