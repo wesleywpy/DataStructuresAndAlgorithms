@@ -1,7 +1,7 @@
 package com.wesley.growth.structures.map;
 
+import com.wesley.growth.structures.hashing.HashTable;
 import com.wesley.growth.support.FileOperation;
-
 import java.util.ArrayList;
 
 public class TestMapMain {
@@ -22,7 +22,10 @@ public class TestMapMain {
                     map.add(word, 1);
             }
 
-            System.out.println("Total different words: " + map.getSize());
+            for(String word: words)
+                map.contains(word);
+
+            System.out.println("Total different words: " + map.size());
             System.out.println("Frequency of PRIDE: " + map.get("pride"));
             System.out.println("Frequency of PREJUDICE: " + map.get("prejudice"));
         }
@@ -36,14 +39,20 @@ public class TestMapMain {
 
         String filename = "/pride-and-prejudice.txt";
 
-        LinkedListMap<String, Integer> linkedListMap = new LinkedListMap<>();
-        double time2 = testMap(linkedListMap, filename);
-        System.out.println("Linked List Map: " + time2 + " s");
+//        LinkedListMap<String, Integer> linkedListMap = new LinkedListMap<>();
+//        double time2 = testMap(linkedListMap, filename);
+//        System.out.println("Linked List Map: " + time2 + " s");
 
         System.out.println();
 
         AVLMap<String, Integer> avlMap = new AVLMap<>();
         double time3 = testMap(avlMap, filename);
         System.out.println("AVL Map: " + time3 + " s");
+
+        System.out.println();
+
+        HashTable<String, Integer> hashTable = new HashTable<>();
+        double time4 = testMap(hashTable, filename);
+        System.out.println("HashTable: " + time4 + " s");
     }
 }

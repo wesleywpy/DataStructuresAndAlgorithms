@@ -12,7 +12,7 @@ public interface Map<K, V> {
 
     V remove(K key);
 
-    int getSize();
+    int size();
 
     boolean isEmpty();
 }

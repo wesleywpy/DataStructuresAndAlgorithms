@@ -11,7 +11,7 @@ public class AVLMap<K extends Comparable<K>, V> implements Map<K, V> {
     }
 
     @Override
-    public int getSize() {
+    public int size() {
         return avl.size();
     }
 

@@ -36,7 +36,7 @@ public class LinkedListMap<K, V> implements Map<K, V> {
     }
 
     @Override
-    public int getSize(){
+    public int size(){
         return size;
     }
 
