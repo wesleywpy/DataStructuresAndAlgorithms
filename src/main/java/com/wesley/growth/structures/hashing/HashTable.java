@@ -9,6 +9,14 @@ import java.util.TreeMap;
  */
 public class HashTable<K, V> implements Map<K, V> {
 
+    /**
+     * 可选的容量值, 都为素数
+     */
+    private final int[] capacity = {
+            53, 97, 193, 389, 769, 1543, 3079, 6151, 12289, 24593,
+            49157, 98317, 196613, 393241, 786433, 1572869, 3145739, 6291469,
+            12582917, 25165843, 50331653, 100663319, 201326611, 402653189, 805306457, 1610612741};
+
     private TreeMap<K, V>[] hashtable;
 
     private int size;
@@ -18,12 +26,17 @@ public class HashTable<K, V> implements Map<K, V> {
      */
     private int m;
 
-    public HashTable() {
-        this(97);
-    }
+    /**
+     * 容量初始下标
+     */
+    private int capacityIndex = 0;
 
-    public HashTable(int m) {
-        this.m = m;
+    private static final int upperTol = 10;
+
+    private static final int lowerTol = 2;
+
+    public HashTable() {
+        this.m = capacity[capacityIndex];
         this.size = 0;
         hashtable = new TreeMap[m];
         for (int i = 0; i < this.m; i++) {
@@ -49,6 +62,12 @@ public class HashTable<K, V> implements Map<K, V> {
         else{
             map.put(key, value);
             size ++;
+
+            // 平均每个索引承载的元素超过一定程度, 进行扩容
+            if(size >= upperTol * m && capacityIndex + 1 < capacity.length){
+                capacityIndex ++;
+                resize(capacity[capacityIndex]);
+            }
         }
     }
 
@@ -59,8 +78,30 @@ public class HashTable<K, V> implements Map<K, V> {
         if(map.containsKey(key)){
             ret = map.remove(key);
             size --;
+
+            // 平均每个索引承载的元素少过一定程度, 进行缩容
+            if(size < lowerTol * m && capacityIndex - 1 >= 0){
+                capacityIndex --;
+                resize(capacity[capacityIndex]);
+            }
         }
         return ret;
+    }
+
+    private void resize(int newM){
+        TreeMap<K, V>[] newHashTable = new TreeMap[newM];
+        for(int i = 0 ; i < newM ; i ++)
+            newHashTable[i] = new TreeMap<>();
+
+        int oldM = m;
+        this.m = newM;
+        for(int i = 0 ; i < oldM ; i ++){
+            TreeMap<K, V> map = hashtable[i];
+            for(K key: map.keySet())
+                newHashTable[hash(key)].put(key, map.get(key));
+        }
+
+        this.hashtable = newHashTable;
     }
 
     @Override
