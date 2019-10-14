@@ -26,13 +26,13 @@ public class MergeSort extends AbstractSort{
 
         mergeSort(arr, left, mid);
         mergeSort(arr, mid + 1, right);
-        mergeSort(arr, left, mid, right);
+        merge(arr, left, mid, right);
     }
 
     /**
      * 将arr[l...mid]和arr[mid+1...r]两部分进行归并
      */
-    private <T extends Comparable<T>> void mergeSort(T[] arr, int left, int mid, int right) {
+    private <T extends Comparable<T>> void merge(T[] arr, int left, int mid, int right) {
         T[] aux = (T[]) new Comparable[right - left + 1];
 
         for (int i = left; i <= right; i ++){
