@@ -29,4 +29,31 @@ public class Solution344 {
             s[k] = cj;
         }
     }
+
+    /**
+     * 给定一个字符串，你需要反转字符串中每个单词的字符顺序，同时仍保留空格和单词的初始顺序。
+     * 示例:
+     * 输入: "Let's take LeetCode contest"
+     * 输出: "s'teL ekat edoCteeL tsetnoc"
+     */
+    public String reverseWords(String s) {
+        String[] words = s.split(" ");
+        StringBuilder sbul = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            char[] chars = words[i].toCharArray();
+            reverseString(chars);
+            sbul.append(chars);
+            if (i < (words.length - 1)) {
+                sbul.append(" ");
+            }
+        }
+        return sbul.toString();
+    }
+
+    public static void main(String[] args) {
+        String[] words = "Let's take LeetCode contest".split(" ");
+        for (String word : words) {
+            System.out.println(word);
+        }
+    }
 }
