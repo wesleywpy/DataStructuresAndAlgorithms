@@ -22,7 +22,9 @@ public class Solution108 {
 
         int mid = left + (right - left) / 2;
         TreeNode node = new TreeNode(nums[mid]);
+        // 左子树
         node.left = buildTree(nums, left, mid - 1);
+        // 右子树
         node.right = buildTree(nums, mid + 1, right);
         return node;
     }

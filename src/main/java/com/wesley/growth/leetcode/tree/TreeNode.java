@@ -17,16 +17,5 @@ public class TreeNode {
         val = x;
     }
 
-    public static TreeNode build(Integer[] arr) {
-        if (arr == null || arr.length < 1) {
-            throw new IllegalArgumentException("参数不能错误");
-        }
-
-        return buildTree(arr, 0, arr.length - 1);
-    }
-
-    private static TreeNode buildTree(Integer[] arr, int start, int end) {
-        return null;
-    }
 
 }
