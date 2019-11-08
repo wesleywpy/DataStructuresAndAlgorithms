@@ -2,7 +2,7 @@ package com.wesley.growth.algorithms.search;
 
 /**
  * <p>
- *
+ * 二分查找
  * </p>
  * Email yani@uoko.com
  *
@@ -19,9 +19,9 @@ public class BinarySearch {
         int left = 0;
         int right = array.length - 1;
 
-        // array[left,right] 区间中查找
+        // array[left ... right] 区间中寻找target
+        // 当left == right时, 区间[left ... right]依然有效
         while(left <= right){
-
 //            int mid = (left + right) / 2; 当left和right值都接近于Int最大值时, 相加值会超过Int最大值
             int mid = left + (right - left) / 2;
 
@@ -34,9 +34,7 @@ public class BinarySearch {
             }else{
                 right = mid -1;
             }
-
         }
-
         return -1;
     }
 
