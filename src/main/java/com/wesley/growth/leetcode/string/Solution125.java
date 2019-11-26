@@ -10,22 +10,7 @@ package com.wesley.growth.leetcode.string;
 public class Solution125 {
 
     /**
-     * 给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。
-     * 注意:
-     *  字符串只包含从 a-z 的小写字母。字符串的最大长度是50000。
-     *
-     *  例子:
-     *  输入: "abca"
-     *  输出: True
-     *  解释: 你可以删除c字符。
-     */
-    public boolean validPalindrome(String s) {
-
-        return true;
-    }
-
-
-    /**
+     * 对撞指针法
      * 给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写
      */
     public boolean isPalindrome(String s) {
@@ -61,7 +46,7 @@ public class Solution125 {
     }
 
     public static void main(String[] args) {
-        boolean res = new Solution125().validPalindrome("deeee");
+        boolean res = new Solution125().isPalindrome("deeee");
         System.out.println(res);
     }
 
