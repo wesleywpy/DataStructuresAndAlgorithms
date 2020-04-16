@@ -9,13 +9,13 @@ package com.wesley.growth.leetcode.linked;
  * @author Created by Yani on 2019/08/14
  */
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
     ListNode(int x) {
         val = x;
     }
 
-    ListNode(int[] arr) {
+    public ListNode(int[] arr) {
         if (arr == null || arr.length < 1) {
             throw new IllegalArgumentException("参数不能错误");
         }
