@@ -11,7 +11,7 @@ package com.wesley.growth.leetcode.linked;
 public class ListNode {
     public int val;
     public ListNode next;
-    ListNode(int x) {
+    public ListNode(int x) {
         val = x;
     }
 
@@ -39,5 +39,9 @@ public class ListNode {
 
         res.append("NULL");
         return res.toString();
+    }
+
+    public void println() {
+        System.out.println(this);
     }
 }

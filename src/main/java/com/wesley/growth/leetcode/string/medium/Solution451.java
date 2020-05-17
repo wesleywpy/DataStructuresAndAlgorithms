@@ -26,11 +26,13 @@ public class Solution451 {
     public String frequencySort(String s) {
         HashMap<Integer, String> map = new HashMap<>();
 
+        // 通过 int 数组记录 每个字符出现的次数
         int[] freq = new int[256];
         for (char c : s.toCharArray()) {
             freq[c]++;
         }
 
+        // 通过 HashMap 将出现次数相同的字符进行拼接
         for (int i = 0; i < freq.length; i++) {
             if (freq[i] != 0) {
                 char ch = (char) i;
