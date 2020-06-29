@@ -63,4 +63,8 @@ public class Solution147 {
         return h.next;
     }
 
+    public static void main(String[] args) {
+        int[] arr = {4, 2, 1, 3};
+        new Solution147().insertionSortList(new ListNode(arr)).println();
+    }
 }

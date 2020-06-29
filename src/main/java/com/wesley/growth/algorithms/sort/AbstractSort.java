@@ -24,7 +24,7 @@ public abstract class AbstractSort implements Sort{
         throw new UnsupportedOperationException();
     }
 
-    protected void swap(int[] arr, int i, int j){
+    void swap(int[] arr, int i, int j){
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;

@@ -1,0 +1,46 @@
+package com.wesley.growth.leetcode.sort;
+
+import java.util.Arrays;
+
+/**
+ * <p>
+ *  输入一个非负整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。
+ *
+ * 示例 1:
+ *  输入: [10,2]
+ *  输出: "102"
+ *
+ * 示例 2:
+ *  输入: [3,30,34,5,9]
+ *  输出: "3033459"
+ *
+ * 提示:
+ *  0 < nums.length <= 100
+ *  说明:
+ *   输出结果可能非常大，所以你需要返回一个字符串而不是整数
+ *   拼接起来的数字可能会有前导 0，最后结果不需要去掉前导 0
+ * </p>
+ *
+ * @author Created by Yani on 2020/06/24
+ */
+public class SolutionOffer45 {
+    public String minNumber(int[] nums) {
+        String[] strs = new String[nums.length];
+        for(int i = 0; i < nums.length; i++) {
+            strs[i] = String.valueOf(nums[i]);
+        }
+        Arrays.sort(strs, (x, y) -> (x + y).compareTo(y + x));
+        StringBuilder res = new StringBuilder();
+        for(String s : strs)
+            res.append(s);
+        return res.toString();
+    }
+
+
+    public static void main(String[] args) {
+        int[] arr1 = new int[]{2,3,1,3,2,4,6,7,9,2,19};
+        String s = new SolutionOffer45().minNumber(arr1);
+        System.out.println(s);
+    }
+
+}

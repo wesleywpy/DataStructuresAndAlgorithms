@@ -22,7 +22,7 @@ public class QuickSort extends AbstractSort {
             return;
         }
 
-        int p = parition2(arr, left, right);
+        int p = parition(arr, left, right);
         // 左区间
         quickSort(arr, left, p - 1);
         // 右区间
