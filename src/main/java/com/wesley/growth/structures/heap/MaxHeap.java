@@ -48,6 +48,7 @@ public class MaxHeap<E extends Comparable<E>> {
         }
 
         this.size = datas.length;
+        // 第一个非叶子节点位置: 元素个数 / 2 .
         for(int i = size / 2; i >= 1; i --){
             shiftDown(i);
         }
@@ -103,12 +104,14 @@ public class MaxHeap<E extends Comparable<E>> {
                 left = right;
             }
 
-            // 如果父节点大于等于子节点
+            // 如果父节点大于等于子节点 不交换位置
             if(elementData[index].compareTo(elementData[left]) >= 0){
                 break;
             }
 
             swap(elementData, index, left);
+
+            // 向下迭代
             index = left;
         }
     }

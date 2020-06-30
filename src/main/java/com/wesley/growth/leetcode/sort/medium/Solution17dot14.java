@@ -18,10 +18,54 @@ import com.wesley.growth.algorithms.sort.util.SortTestHelper;
  */
 public class Solution17dot14 {
 
+    /**
+     * 构建小顶堆
+     */
     public int[] smallestK(int[] arr, int k) {
-        int[] res = new int[k];
+        int size = arr.length - 1;
+        // 第一个非叶子节点位置: 元素个数 / 2
+        for (int i = size / 2; i >= 0; i--) {
+            shiftDown(arr, i, size);
+        }
 
+        // 弹出最小元素
+        int[] res = new int[k];
+        for (int i = 0; i < k; i++) {
+            res[i] = arr[0];
+            swap(arr, 0, size);
+            size --;
+            shiftDown(arr, 0, size);
+        }
         return res;
+    }
+
+    private void swap(int[] arr, int i, int j){
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    private void shiftDown(int[] arr, int index, int len){
+        // 二叉堆 shift down 过程
+        while ((2 * index + 1) <= len) {
+            // 当前节点的 左子结点 2i + 1
+            int left = 2 * index + 1;
+            // 当前节点的 右结点 2i + 2
+            int right = left + 1;
+
+            // 右节点 小于 左节点
+            if (right <= len && arr[right] < arr[left]) {
+                left = right;
+            }
+            // 当前节点 小于等于 子节点 不交换位置
+            if (arr[index] <= arr[left]) {
+                break;
+            }
+
+            swap(arr, index, left);
+            // 向下迭代
+            index = left;
+        }
     }
 
     /**
