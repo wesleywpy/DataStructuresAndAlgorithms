@@ -23,6 +23,7 @@ public class HeapSort extends AbstractSort {
     public void sort(int[] arr) {
 
         // 将数组二叉堆化, 堆中每个节点的值都不大于其父节点的值（大顶堆）
+        // 最后一个非叶子节点的索引: (count - 1) / 2
         for(int i = (arr.length - 1) / 2; i >= 0; i--){
             shiftDown(arr, i, arr.length);
         }
