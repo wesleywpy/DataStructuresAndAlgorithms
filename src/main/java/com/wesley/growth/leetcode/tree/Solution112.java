@@ -1,5 +1,8 @@
 package com.wesley.growth.leetcode.tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * <p>
  *
@@ -23,6 +26,39 @@ public class Solution112 {
         }
 
         return hasPathSum(root.left, sum - root.val) ||  hasPathSum(root.right, sum - root.val);
+    }
+
+    /**
+     * 广度优先
+     */
+    public boolean hasPathSumWithBfs(TreeNode root, int sum) {
+        if (root == null) {
+            return false;
+        }
+        Queue<TreeNode> queNode = new LinkedList<TreeNode>();
+        Queue<Integer> queVal = new LinkedList<Integer>();
+        queNode.offer(root);
+        queVal.offer(root.val);
+        while (!queNode.isEmpty()) {
+            // 从队列弹出一个元素
+            TreeNode now = queNode.poll();
+            int temp = queVal.poll();
+            if (now.left == null && now.right == null) {
+                if (temp == sum) {
+                    return true;
+                }
+                continue;
+            }
+            if (now.left != null) {
+                queNode.offer(now.left);
+                queVal.offer(now.left.val + temp);
+            }
+            if (now.right != null) {
+                queNode.offer(now.right);
+                queVal.offer(now.right.val + temp);
+            }
+        }
+        return false;
     }
 
 
