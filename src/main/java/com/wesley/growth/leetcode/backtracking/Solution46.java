@@ -67,7 +67,7 @@ public class Solution46 {
      * @param nums 目标数组
      * @param path 路径
      */
-    private void dfs2(int[] nums, List<Integer> path, List<List<Integer>> res) {
+    public void backtrackTemplate(int[] nums, List<Integer> path, List<List<Integer>> res) {
         // 路径长度 == 数组长度 则放入结果列表
         if (path.size() == nums.length) {
             res.add(new ArrayList<>(path));
@@ -78,7 +78,7 @@ public class Solution46 {
             // 添加路径节点
             path.add(nums[i]);
             //递归
-            dfs2(nums, path, res);
+            backtrackTemplate(nums, path, res);
             // 回溯的过程中，将当前的节点从 path 中删除
             path.remove(path.size() - 1);
         }
