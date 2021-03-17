@@ -1,4 +1,4 @@
-package com.wesley.growth.exam;
+package com.wesley.growth.leetcode.string;
 
 /**
  * <p>
