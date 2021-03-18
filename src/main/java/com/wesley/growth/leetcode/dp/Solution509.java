@@ -1,5 +1,8 @@
 package com.wesley.growth.leetcode.dp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 斐波那契数，通常用 F(n) 表示，形成的序列称为斐波那契数列。该数列由 0 和 1 开始，后面的每一项数字都是前面两项数字的和
  *
@@ -46,8 +49,23 @@ public class Solution509 {
         return b;
     }
 
+    /**
+     * 动态规划 - 自下向上的解决问题
+     */
+    public int fib03(int n) {
+        List<Integer> memory = new ArrayList<>(n);
+        memory.add(0, 0);
+        memory.add(1, 1);
+
+        for (int i = 2; i <= n; i++) {
+            memory.add(i, memory.get(i-1) + memory.get(i - 2));
+        }
+
+        return memory.get(n);
+    }
+
     public static void main(String[] args) {
-        int res = new Solution509().fib02(11);
+        int res = new Solution509().fib03(3);
         System.out.println(res);
     }
 
