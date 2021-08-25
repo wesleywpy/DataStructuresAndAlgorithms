@@ -23,4 +23,8 @@ public class Solution27 {
         return k;
     }
 
+    public static void main(String[] args) {
+        int res = new Solution27().removeElement(new int[]{2,0,1,1,3,4}, 1);
+        System.out.println(res);
+    }
 }

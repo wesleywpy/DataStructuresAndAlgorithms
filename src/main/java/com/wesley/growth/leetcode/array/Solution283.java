@@ -1,4 +1,4 @@
-package com.wesley.growth.leetcode;
+package com.wesley.growth.leetcode.array;
 
 import com.wesley.growth.algorithms.sort.util.SortTestHelper;
 
