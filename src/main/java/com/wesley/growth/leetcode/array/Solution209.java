@@ -35,7 +35,7 @@ public class Solution209 {
 
             if (sum >= s) {
                 int tmp = right - left + 1;
-                res = tmp < res ? tmp : res;
+                res = Math.min(tmp, res);
             }
         }
 
@@ -46,6 +46,29 @@ public class Solution209 {
 
         return res;
     }
+
+    /**
+     * 最长窗口模板
+     * for(枚举选择)
+     *     右边界
+     *     while(不符合条件)
+     *         左边界
+     *     更新结果
+     */
+    public int minSubArrayLen2(int s, int[] nums) {
+        int left = 0;
+        int sum = 0;
+        int result = Integer.MAX_VALUE;
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
+            while (sum >= s) {
+                result = Math.min(result, right - left + 1);
+                sum -= nums[left++];
+            }
+        }
+        return result == Integer.MAX_VALUE ? 0 : result;
+    }
+
 
     public static void main(String[] args) {
         new Solution209().minSubArrayLen(7, new int[]{2,3,1,2,4,3});

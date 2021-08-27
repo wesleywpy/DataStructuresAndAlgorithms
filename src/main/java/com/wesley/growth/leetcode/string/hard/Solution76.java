@@ -15,6 +15,9 @@ package com.wesley.growth.leetcode.string.hard;
  */
 public class Solution76 {
 
+    /**
+     * 滑动窗口
+     */
     public String minWindow(String s, String t) {
         if (s == null || s.trim().equals("") || s.length() < t.length()) {
             return "";
