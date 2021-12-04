@@ -16,32 +16,31 @@ import com.wesley.growth.leetcode.linked.ListNode;
 public class Solution24 {
 
     public ListNode swapPairs(ListNode head) {
+        // 设置虚拟头结点
+        ListNode dmHead = new ListNode(-1);
+        dmHead.next = head;
 
-        ListNode dummyHead = new ListNode(-1);
-        dummyHead.next = head;
+        ListNode cur = dmHead;
+        while (cur.next != null && cur.next.next != null) {
+            ListNode a = cur.next;
+            ListNode b = cur.next.next;
 
-        ListNode p = dummyHead;
-        while (p.next != null && p.next.next != null) {
-            ListNode node1 = p.next;
-            ListNode node2 = node1.next;
-            ListNode next = node2.next;
+            // s1: 当前节点 指向 a.next.next 节点(就是指向节点 b)
+            cur.next = b;
+            // s2: a.next 指向 b.next 节点 (b.next节点可能为null)
+            a.next = b.next;
+            // s3: b.next 指向 a, 完成a与b的位置转换
+            b.next = a;
 
-            // 交互位置
-            node2.next = node1;
-            node1.next = next;
-            p.next = node2;
-            // 移动到第二个node位置
-            p = node1;
+            cur = a;
         }
 
-
-        return dummyHead.next;
+        return dmHead.next;
     }
 
     public static void main(String[] args) {
         ListNode node = new ListNode(new int[]{1, 2, 3, 4, 5});
         new Solution24().swapPairs(node).println();
     }
-
 
 }

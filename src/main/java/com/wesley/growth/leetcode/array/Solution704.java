@@ -26,8 +26,9 @@ public class Solution704 {
         int right = nums.length - 1;
         // 当left==right，区间[left, right]依然有效，所以用 <=
         while (left <= right) {
-            // 防止溢出 等同于(left + right)/2
-            int middle = left + ((right - left) / 2);
+            // left + ((left + right)/2) 找到每次查找后的中间下标
+            // (right - left) >> 1 防止两个特别大的int类型相加溢出, 等同于(left + right)/2
+            int middle = left + ((right - left) >> 1);
 
             if (nums[middle] > target) {
                 // target 在左区间，所以[left, middle - 1]
@@ -72,7 +73,7 @@ public class Solution704 {
 
     public static void main(String[] args) {
         int[] nums = new int[]{1, 2, 4, 6, 8, 11, 15};
-        int res = new Solution704().search2(nums, 11);
+        int res = new Solution704().search(nums, 1);
         System.out.println(res);
     }
 

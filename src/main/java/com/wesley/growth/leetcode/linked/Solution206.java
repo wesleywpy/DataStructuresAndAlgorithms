@@ -17,16 +17,21 @@ public class Solution206 {
      * 反转一个链表, 迭代实现
      */
     public ListNode reverseList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
         ListNode prev = null;
         ListNode curr = head;
         while (curr != null) {
-            // 临时节点，暂存当前节点的下一节点，用于后移
+            // 取出后节点，用于后移
             ListNode next = curr.next;
-            // 将当前节点指向它前面的节点
+            // 将curr节点的后节点 指向 它前面的节点
             curr.next = prev;
-            // 前指针后移
+            // 前节点(指针)后移
             prev = curr;
-            // 当前指针后移
+
+            // curr节点(指针)后移，循环上面逻辑
             curr = next;
         }
         return prev;
@@ -77,9 +82,10 @@ public class Solution206 {
     public static void main(String[] args) {
         int[] arr1 = {1, 2, 3, 4, 5};
         ListNode node = new ListNode(arr1);
-        ListNode result = new Solution206().reverseListByRecursion(node);
+        ListNode result = new Solution206().reverseList(node);
         System.out.println(result);
     }
+
 
 }
 
