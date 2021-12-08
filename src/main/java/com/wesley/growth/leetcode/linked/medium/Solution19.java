@@ -17,34 +17,42 @@ import com.wesley.growth.leetcode.linked.ListNode;
  */
 public class Solution19 {
 
+    /**
+     *
+     * @param n 必须大于0
+     */
     public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (n < 1) {
+            return head;
+        }
         ListNode dummyHead = new ListNode(-1);
         dummyHead.next = head;
-
         // 采用 双指针
-        ListNode p = dummyHead;
-        ListNode q = dummyHead;
+        ListNode slow = dummyHead;
+        ListNode fast = dummyHead;
 
-        // q 指针 先移动 n 个位置
+        // fast 指针 先移动 n 个位置
         for (int i = 0; i < n + 1; i++) {
-            q = q.next;
+            fast = fast.next;
         }
 
-        // p,q指针一起移动直到q指针到达链表末尾
-        while (q != null) {
-            p = p.next;
-            q = q.next;
+        // slow,fast指针一起移动直到fast指针到达链表末尾
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
         }
 
-        ListNode delNode = p.next;
-        p.next = delNode.next;
+        // slow结点的下个结点 即为要删除的结点
+        ListNode delNode = slow.next;
+        slow.next = delNode.next;
         delNode = null;
         return dummyHead.next;
     }
 
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-        new Solution19().removeNthFromEnd(new ListNode(arr), 0).println();
+        new Solution19().removeNthFromEnd(new ListNode(arr), 5).println();
     }
+
 
 }

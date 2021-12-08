@@ -1,6 +1,7 @@
 package com.wesley.growth.algorithms.sort;
 
 /**
+ * 冒泡排序
  * @author Wesley Created By 2018/8/14
  */
 public class BubbleSort extends AbstractSort {
