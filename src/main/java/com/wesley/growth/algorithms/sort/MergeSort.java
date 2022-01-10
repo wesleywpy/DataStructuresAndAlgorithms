@@ -63,17 +63,21 @@ public class MergeSort extends AbstractSort{
     }
 
     private void mergeSort(int[] arr, int left, int right) {
+        // 不可再分割
         if (left >= right) {
             return;
         }
 
         int mid = (left + right) / 2;
+        // 左边：[left, mid]
         mergeSort(arr, left, mid);
+        // 右边：[mid+1, right]
         mergeSort(arr, mid + 1, right);
-        mergeSort(arr, left, mid, right);
+        merge(arr, left, mid, right);
     }
 
-    private void mergeSort(int[] arr, int left, int mid, int right) {
+    private void merge(int[] arr, int left, int mid, int right) {
+        // 需要临时空间
         int[] aux = new int[right - left + 1];
 
         for (int i = left; i <= right; i ++){
