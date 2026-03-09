@@ -6,10 +6,9 @@ import java.util.List;
 
 /**
  * <p>
- *  给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+ *  给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
  * </p>
  *  注意：答案中不可以包含重复的三元组。
- *
  *  例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]
  *  满足要求的三元组集合为：
  *  [
@@ -30,8 +29,8 @@ public class Solution15 {
         }
 
         Arrays.sort(nums);
-        // 锚点
-        for (int k = 0; k < nums.length; k++) {
+        // 锚点 nums[k]
+        for (int k = 0; k < nums.length-2; k++) {
             // 如果当前数字大于0，则三数之和一定大于0，所以结束循环
             if(nums[k] > 0) {
                 break;

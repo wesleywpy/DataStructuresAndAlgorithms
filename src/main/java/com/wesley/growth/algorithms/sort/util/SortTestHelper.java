@@ -81,11 +81,11 @@ public class SortTestHelper {
     public static <T extends Comparable<T>> void testSort(Sort sort, T[] arr){
         System.out.println("排序开始...");
 
-        long start = System.currentTimeMillis();
+        long start = System.nanoTime();
         sort.sort(arr);
-        long end = System.currentTimeMillis();
+        long end = System.nanoTime();
 
-        System.out.println("排序结束! \r\n耗时: " + (end - start) + " 毫秒");
+        System.out.println("排序结束! \r\n耗时: " + ((end - start) / 1000000L) + " 毫秒");
     }
 
     private static boolean isSorted(int[] arr){
@@ -100,10 +100,10 @@ public class SortTestHelper {
 
     public static <T> void print(T[] array){
         StringJoiner joiner = new StringJoiner(",");
-        for (int i = 0; i < array.length; i++){
-            joiner.add(String.valueOf(array[i]));
+        for (T t : array) {
+            joiner.add(String.valueOf(t));
         }
-        System.out.println(joiner.toString());
+        System.out.println(joiner);
     }
 
     public static void print(int[] array){

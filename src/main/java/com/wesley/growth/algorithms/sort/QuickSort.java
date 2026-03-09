@@ -18,22 +18,20 @@ public class QuickSort extends AbstractSort {
      * 对arr[l...r]部分进行快速排序
      */
     private void quickSort(int[] arr, int left, int right){
-        if (left >= right) {
-            return;
+        if (left < right) {
+            int p = partition(arr, left, right);
+            // 左区间
+            quickSort(arr, left, p - 1);
+            // 右区间
+            quickSort(arr, p + 1, right);
         }
-
-        int p = parition(arr, left, right);
-        // 左区间
-        quickSort(arr, left, p - 1);
-        // 右区间
-        quickSort(arr, p + 1, right);
     }
 
     /**
      * // 返回p, 使得arr[left...p-1] < arr[p] ; arr[p+1...right] > arr[p]
      * @return 基准数的位置
      */
-    private int parition(int[] arr, int left, int right) {
+    private int partition(int[] arr, int left, int right) {
         // 随机选取区间中的一个数为基准数。
         int randomIndex = random.nextInt(right - left + 1) + left;
         swap(arr, left, randomIndex);

@@ -31,6 +31,7 @@ public class Solution167 {
                 return new int[]{left + 1, right + 1};
             }
 
+            // 数组已排序
             if (temp > target) {
                 right--;
             }else{

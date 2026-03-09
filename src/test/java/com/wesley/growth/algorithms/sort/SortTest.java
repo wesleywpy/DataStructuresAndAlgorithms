@@ -20,9 +20,9 @@ public class SortTest {
     }
 
     @Test
-    public void selectSort2() throws Exception {
-        String[] arr = {"A", "C", "Z", "B", "D", "E"};
-        SortTestHelper.testSort(new SelectionSort(), arr);
+    public void baseSortTest(){
+        int[] arr = {30, 12, 23, 97, 4, 13, 27, 49};
+        SortTestHelper.testSort(new QuickSort(), arr);
         SortTestHelper.print(arr);
     }
 
@@ -32,7 +32,7 @@ public class SortTest {
         int[] array2 = Arrays.copyOf(array1, array1.length);
 
         SortTestHelper.testSort(new InsertionSort(), array1);
-        SortTestHelper.testSort(new SelectionSort(), array2);
+        SortTestHelper.testSort(new QuickSort(), array2);
     }
 
     /**

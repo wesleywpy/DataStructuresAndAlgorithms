@@ -6,6 +6,11 @@ package com.wesley.growth.algorithms.sort;
  */
 public class BubbleSort extends AbstractSort {
 
+    /**
+     * 稳定
+     * 时间复杂度 平均 O(n^2) 最好 O(n) 最坏 O(n^2)
+     * 空间复杂度 O(1)
+     **/
     @Override
     public void sort(int[] arr) {
         int len = arr.length;
